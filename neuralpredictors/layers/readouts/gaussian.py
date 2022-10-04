@@ -572,6 +572,8 @@ class FullGaussian2d(Readout):
 
         if shift is not None:
             grid = grid + shift[:, None, None, :]
+            
+        print('return_grid_out : ',return_grid_out)
 
         y = F.grid_sample(x, grid, align_corners=self.align_corners)
         if return_grid_out:
@@ -581,7 +583,7 @@ class FullGaussian2d(Readout):
         if self.bias is not None:
             y = y + bias
         if return_grid_out:
-            return y, y_grid
+            return [y, y_grid]
         else:
             return y
 
