@@ -573,12 +573,12 @@ class FullGaussian2d(Readout):
         if shift is not None:
             grid = grid + shift[:, None, None, :]
 
-        y = F.grid_sample(x, grid, align_corners=self.align_corners)
-        y = (y.squeeze(-1) * feat).sum(1).view(N, outdims)
+        y_grid = F.grid_sample(x, grid, align_corners=self.align_corners)
+        y = (y_grid.squeeze(-1) * feat).sum(1).view(N, outdims)
 
         if self.bias is not None:
             y = y + bias
-        return y
+        return y, y_grid
 
     def __repr__(self):
         c, w, h = self.in_shape
