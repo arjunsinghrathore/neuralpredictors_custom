@@ -550,7 +550,6 @@ class FullGaussian2d(Readout):
 #         if (c_in, w_in, h_in) != (c, w, h):
         if (w_in, h_in) != (w, h):
             warnings.warn("the specified feature map dimension is not the readout's expected input dimension")
-        feat = self.features.view(1, c, self.outdims)
         bias = self.bias
         outdims = self.outdims
 
@@ -578,15 +577,17 @@ class FullGaussian2d(Readout):
 
         y = F.grid_sample(x, grid, align_corners=self.align_corners)
         if return_grid_out:
-            y_grid = y.clone()
+#             y_grid = y.clone()
+              return y
+        feat = self.features.view(1, c, self.outdims)
         y = (y.squeeze(-1) * feat).sum(1).view(N, outdims)
 
         if self.bias is not None:
             y = y + bias
-        if return_grid_out:
-            return [y, y_grid]
-        else:
-            return y
+#         if return_grid_out:
+#             return [y, y_grid]
+#         else:
+        return y
 
     def __repr__(self):
         c, w, h = self.in_shape
