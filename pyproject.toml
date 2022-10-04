@@ -23,14 +23,14 @@ email = "software@sinzlab.net"
 GitHub = "https://github.com/arjunsinghrathore/neuralpredictors_custom"
 
 [tool.setuptools]
-packages = ["neuralpredictors_custom"]
+packages = ["neuralpredictors"]
 
 [tool.black]
 line-length = 120
 
 [tool.coverage.run]
 branch = true
-source = ["neuralpredictors_custom"]
+source = ["neuralpredictors"]
 
 [tool.mypy]
 python_version = "3.8"
