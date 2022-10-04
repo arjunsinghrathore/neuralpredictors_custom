@@ -3,7 +3,7 @@ requires = ["setuptools", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "neuralpredictors"
+name = "neuralpredictors_custom"
 version = "0.3.0"
 description = "Sinz Lab Neural System Identification Utilities"
 dependencies = [
@@ -20,17 +20,17 @@ name = "Sinz Lab"
 email = "software@sinzlab.net"
 
 [project.urls]
-GitHub = "https://github.com/sinzlab/neuralpredictors"
+GitHub = "https://github.com/arjunsinghrathore/neuralpredictors_custom"
 
 [tool.setuptools]
-packages = ["neuralpredictors"]
+packages = ["neuralpredictors_custom"]
 
 [tool.black]
 line-length = 120
 
 [tool.coverage.run]
 branch = true
-source = ["neuralpredictors"]
+source = ["neuralpredictors_custom"]
 
 [tool.mypy]
 python_version = "3.8"
