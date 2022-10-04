@@ -529,7 +529,7 @@ class FullGaussian2d(Readout):
         self.register_buffer("grid_sharing_index", torch.from_numpy(sharing_idx))
         self._shared_grid = True
 
-    def forward(self, x, sample=None, shift=None, out_idx=None, **kwargs):
+    def forward(self, x, sample=None, shift=None, out_idx=None, return_grid_out = False, **kwargs):
         """
         Propagates the input forwards through the readout
         Args:
@@ -573,12 +573,17 @@ class FullGaussian2d(Readout):
         if shift is not None:
             grid = grid + shift[:, None, None, :]
 
-        y_grid = F.grid_sample(x, grid, align_corners=self.align_corners)
-        y = (y_grid.squeeze(-1) * feat).sum(1).view(N, outdims)
+        y = F.grid_sample(x, grid, align_corners=self.align_corners)
+        if return_grid_out:
+            y_grid = y.clone()
+        y = (y.squeeze(-1) * feat).sum(1).view(N, outdims)
 
         if self.bias is not None:
             y = y + bias
-        return y, y_grid
+        if return_grid_out:
+            return y, y_grid
+        else:
+            return y
 
     def __repr__(self):
         c, w, h = self.in_shape
