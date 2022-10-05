@@ -545,7 +545,6 @@ class FullGaussian2d(Readout):
         Returns:
             y: neuronal activity
         """
-#         print('Innnnnnn')
         N, c, w, h = x.size()
         c_in, w_in, h_in = self.in_shape
         if (c_in, w_in, h_in) != (c, w, h):
@@ -553,8 +552,6 @@ class FullGaussian2d(Readout):
             warnings.warn("the specified feature map dimension is not the readout's expected input dimension")
         bias = self.bias
         outdims = self.outdims
-        
-#         print('going to sample_grid')
 
         if self.batch_sample:
             # sample the grid_locations separately per image per batch
@@ -562,8 +559,6 @@ class FullGaussian2d(Readout):
         else:
             # use one sampled grid_locations for all images in the batch
             grid = self.sample_grid(batch_size=1, sample=sample).expand(N, outdims, 1, 2)
-            
-#         print('coming out sample_grid')
 
         if out_idx is not None:
             if isinstance(out_idx, np.ndarray):
@@ -577,10 +572,7 @@ class FullGaussian2d(Readout):
 
         if shift is not None:
             grid = grid + shift[:, None, None, :]
-            
-#         print('return_grid_out : ',return_grid_out)
 
-#         print('going to grid_sample')
 
         y = F.grid_sample(x, grid, align_corners=self.align_corners)
         if return_grid_out:
